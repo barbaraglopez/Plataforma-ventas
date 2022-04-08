@@ -6,9 +6,166 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/style.css" rel="stylesheet">
         <script src="./js/ventas.js" defer></script>
+        <script src="./js/auxiliares.js" defer></script>
+        <script src="./js/funcionalidades.js" defer></script>
         <script src="./js/script.js" defer></script>
     </head>
     <body>
-    
-    </body>
+    <!---------------------------------------VENTANAS MODALES----------------------------------------->
+    <div class="modal hidden"><!-------- AGREGAR VENTA ----------->
+        <div class="tituloContainer1">
+            <h3 class="titulo1">Agregar venta</h3>
+        </div>    
+        <div class="nuevaVenta">
+            <form id="miForm">
+                <label> 
+                    Vendedora
+                </label>
+                <select id="vendedoras" name="vendedoras">
+                    <optgroup id="opcionesVendedoras"></optgroup>
+                </select>
+                <label>
+                    Componentes
+                </label>
+                <select id="componentes" name="componentes" multiple>
+                        <optgroup id="opcionesComponentes"></optgroup>
+                </select>
+                <label>
+                    Sucursales
+                </label>
+                <select id="sucursales" name="sucursales">
+                    <optgroup id="opcionesSucursales"></optgroup>
+                </select>
+                <label>Fecha</label>
+                <input type="date" id="fechaNuevaVenta">
+                <div class="buttonContainer1">
+                    <button class="close-modal cancelar">cancelar</button>
+                    <button type="submit" id="btnGuardarVenta" class="confirmar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>    
+    <div class="overlay hidden"></div>
+<!------------------------------------------------------------------------------------------->
+    <div class="modal2 hidden"><!-------- EDITAR VENTA ----------->
+        <div class="tituloContainer2">
+            <h3 class="titulo2">Editar Venta</h3>
+        </div>
+            <form id="form-editarVenta">
+                <label> 
+                    Vendedora
+                </label>
+                <select id="editarVendedoras" name="editarVendedoras">
+                    <optgroup id="editarOpcionVendedora"></optgroup>
+                </select>
+                <label>
+                    Componentes
+                </label>
+                <select id="editarComponentes" name="editarComponentes" multiple>
+                        <optgroup id="editarOpcionComponentes"></optgroup>
+                </select>
+                <label>
+                    Sucursales
+                </label>
+                <select id="editarSucursales" name="editarSucursales">
+                    <optgroup id="editarOpcionSucursales"></optgroup>
+                </select>
+                <label>Fecha</label>
+                <input type="date" id="fechaEditarVenta">
+                <div class="buttonContainer2">
+                    <button class="close-modal2 cancelar">Cancelar</button>
+                    <button type="submit" id="btnEditarVenta" class="confirmar">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>    
+    <div class="overlay2 hidden"></div>
+<!------------------------------------------------------------------------------------------->
+    <div class="modal3 hidden"><!-------- ELIMINAR VENTA ----------->
+        <div class="tituloContainer3">
+            <h3 class="titulo3">Eliminar ventas</h3>
+        </div>
+        <div class="info3">
+            <h3>¿Estás segura?</h3>
+            <h4>Esta acción no se puede revertir.</h4>
+        </div>
+        <div class="buttonContainer3">
+            <button class="close-modal3 cancelar">Cancelar</button>
+            <button class="EliminarVenta confirmar">Eliminar</button>
+        </div>
+    </div>    
+    <div class="overlay3 hidden"></div>
+<!---------------------------------- TABLAS -------------------------------------------->
+    <div class="container">
+        <div class="ventas" id="tablaVentas">
+            <div>
+                <h2 class="titulo sucursal">
+                    Ventas por sucursal
+                </h2>
+            </div>  
+            <div class="sucursalYtotal">
+                <div class="sucursalMasVentas">
+                    <div>
+                        <h4>Sucursal: </h4>
+                    </div>
+                    <div id="datosMasVentas"></div>
+                </div>    
+                <div class="totalVentas">
+                    <div>
+                        <h4>
+                            Total de ventas :
+                        </h4>   
+                    </div>
+                    <div id="datosTotalVentas"></div>
+                </div>
+            </div>    
+        </div>
+        <div class="ventas">
+            <h2 class="titulo reportes">
+                Reportes
+            </h2>
+            <div id="tablaReportes">
+                <div class="productosEstrella">
+                </div>
+                <div class="vendedoraMejor">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cuadriculaMayor">
+        <div class="titulo tablaMayor">
+            <h2>
+                Ventas
+            </h2>
+            <button class="show-modal btn" id="btnNuevaVenta">
+                <i class="fas fa-plus-circle"></i>Nueva venta
+            </button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Vendedora
+                    </th>
+                    <th>
+                        Sucursal
+                    </th>
+                    <th>
+                        Componentes
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="cuadriculaVentas"></tbody>
+        </table>    
+    </div>
+</body>
 </html>

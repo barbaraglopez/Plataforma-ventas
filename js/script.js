@@ -1,220 +1,198 @@
-//Funcion para obtener las coincidencias de busqueda con la fecha 
-const obtenerFecha =(mes, anio)=>{
-  let getDate = local.ventas.filter(
-    (elemento) =>
-      elemento.fecha.getMonth() + 1 === mes &&
-      elemento.fecha.getFullYear() === anio
-  );
-  return getDate
+// -------------------------------------------------------------------------------------------//
+//                               PRIMER RENDERIZADO
+// -------------------------------------------------------------------------------------------//
+window.addEventListener('load',()=>{
+  renderizadoDatosReporte()
+  renderizadoVentasPorSucursal()
+  crearTablaVentas()
+})
+
+
+// -------------------------------------------------------------------------------------------//
+//                               VENTANAS MODALES
+// -------------------------------------------------------------------------------------------//
+
+// ----------------------MODAL PARA NUEVA VENTA---------------------
+let modal = document.querySelector(".modal");
+let overlay = document.querySelector(".overlay");
+let btnCloseModal = document.querySelector(".close-modal");
+let btnOpenModal = document.querySelector(".show-modal"); 
+
+
+let showModal = function () {
+    overlay.classList.remove('hidden');
+    modal.classList.remove('hidden');
 }
 
-
-const precioComponente=(componente)=>{
-  const {precios} = local
-  for(const precio of precios){
-    if(precio.componente === componente){
-      return precio.precio
-    }
-  }
+let hiddeModal = function (){
+    overlay.classList.add('hidden')
+    modal.classList.add('hidden')
 }
 
-/* precioMaquina(componentes): recibe un array de componentes y devuelve el precio de la máquina que se puede armar con esos componentes,
-que es la suma de los precios de cada componente incluido. */
+btnOpenModal.addEventListener('click', ()=>{
+    showModal()
+    //componentesSelect();
+    cargarDatos('opcionesComponentes');
+    cargarDatos('opcionesVendedoras');
+    cargarDatos('opcionesSucursales');
 
-const precioMaquina = (componentes) => {
-  let acc = 0;
-  for (const componente of componentes) {
-    acc += precioComponente(componente);
-  }
-  return acc;
-};
+})
 
-//console.log("precioMaquina: ", precioMaquina(['Monitor GPRS 3000', 'Motherboard ASUS 1500']))// 320 ($200 del monitor + $120 del motherboard))
-
-/* cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o sea que formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada por la variable ventas */
-
-const cantidadVentasComponente = (componente) =>{
-  let contador = 0;
-  const {ventas} = local
-  for(const venta of ventas){
-    const {componentes} = venta
-    if(componentes.includes(componente)){
-      contador++
-    }
-  }
-  return contador
-}
-//console.log(cantidadVentasComponente("Monitor GPRS 3000"))
-
-/* vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre). */
-
-const vendedoraDelMes = (mes, anio) => {
-  const {ventas, vendedoras} = local
-  let ventasFiltrado = ventas.filter(elemento => elemento.fecha.getMonth() + 1 === mes && elemento.fecha.getFullYear() === anio)
-  let vendedorasObj = {};
-  for (const vendedora of vendedoras) {
-    let contador = 0;
-    for (const venta of ventasFiltrado) {
-      if (vendedora === venta.nombreVendedora) {
-        contador += precioMaquina(venta.componentes);
+// -------------------------------------------------------------------------------------------//
+//                              IMPRESION DE DATOS EN LAS MODALES
+// -------------------------------------------------------------------------------------------//
+//OPCION SELECCIONAR COMPONENTES
+const componentesSelect = () => {
+  let opcionesComponentes = document.getElementById('opcionesComponentes')
+//creo los option del select 
+      const {precios} = local;
+      for(const {componentes} of precios){
+      const crearInputs = document.createElement('option');
+      opcionesComponentes.appendChild(crearInputs);
+      crearInputs.innerHTML = `${componentes}`
       }
-    }
-    vendedorasObj[vendedora] = contador;
+}
+
+//OPCION SELECCIONAR VENDEDORA
+const vendedoraSelect = () => {
+  const nodoVendedoras = document.getElementById('opcionesVendedoras')
+  if(nodoVendedoras.innerHTML === ""){
+      for(const{vendedoras} of local){
+          let vendedorass = vendedoras
+          const crearOpciones = document.createElement('option');
+          nodoVendedoras.appendChild(crearOpciones);
+          crearOpciones.innerHTML = `${vendedorass}`
+      }  
+  }     
+} 
+
+ //OPCION SELECCIONAR SUCURSAL
+const selectSucursal = () => {
+  const opcionSucursales = document.getElementById('opcionesSucursales')
+  if(opcionSucursales.innerHTML === ""){
+      for(const{sucursales} of local){
+          let array = sucursales
+          const opciones = document.createElement('option');
+          opcionSucursales.appendChild(opciones);
+          opciones.innerHTML = `${array}`
+      }  
   }
-  let contadorDos = 0;
-  let nombreVendedora = "";
-  for (const vendedora in vendedorasObj) {
-    const total = vendedorasObj[vendedora];
-    if (contadorDos < total) {
-      contadorDos = total;
-      nombreVendedora = vendedora;
-    }
+} 
+
+const cargarDatos = (id) => {
+  const opciones = document.getElementById(id)
+  const {sucursales, vendedoras, precios} = local;
+  if(opciones.innerHTML===""){
+      if(id === 'opcionesSucursales'){
+          sucursales.forEach(element => {
+              const opciones = document.createElement('option');
+              const opcionSucursales = document.getElementById('opcionesSucursales')
+              opcionSucursales.appendChild(opciones);
+              opciones.innerHTML = `${element}`
+          } )
+      }else if(id === 'opcionesVendedoras'){
+          vendedoras.forEach(element=>{
+              const crearOpciones = document.createElement('option');
+              let nodoVendedoras = document.getElementById('opcionesVendedoras')
+              nodoVendedoras.appendChild(crearOpciones);
+              crearOpciones.innerHTML = `${element}`
+          })
+      }else{ 
+          precios.forEach(({componente})=>{
+              const crearInputs = document.createElement('option');
+              opcionesComponentes.appendChild(crearInputs);
+              crearInputs.innerHTML = `${componente}`
+          })
+      }
   }
-  return nombreVendedora;
-};
-
-//console.log(vendedoraDelMes(1, 2019));
-
-/* ventasMes(mes, anio): Obtener las ventas de un mes. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre). */
-
-const ventasMes = (mes, anio) => {
-  const { ventas } = local;
-  let getDate = ventas.filter(
-    (elemento) =>
-      elemento.fecha.getMonth() + 1 === mes &&
-      elemento.fecha.getFullYear() === anio
-  );
-  //console.log(getDate)
-  let acumulador = 0;
-  for (const { componentes } of getDate) {
-    acumulador += precioMaquina(componentes);
-  }
-  return acumulador
-};
-
-//console.log(ventasMes(1, 2019));
-
-//ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.
-const ventasVendedora = (nombre)=>{
-    const {ventas} = local;
-    let contador = 0;
-    for(const {nombreVendedora, componentes} of ventas){
-        if(nombre === nombreVendedora){
-            contador += precioMaquina(componentes)
-        }
-    }
-    return contador
 }
 
-//console.log(ventasVendedora("Grace"))
+// ---------------------------------MODAL PARA EDITAR VENTA----------------------------------- 
 
-/* componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. El dato de la cantidad de ventas es el que indica la función cantidadVentasComponente*/
+let modal2 = document.querySelector(".modal2");
+let overlay2 = document.querySelector(".overlay2");
+let btnCancelarNuevaVenta = document.querySelector(".close-modal2");
 
-const componenteMasVendido=()=>{
-    const {ventas} = local;
-    let contador = 0;
-    let str = "";
-    for(const{componentes} of ventas){
-      for(const componente of componentes){
-        if(cantidadVentasComponente(componente) > contador){
-          contador += cantidadVentasComponente(componente)
-          str = componente
-        }
-      } 
-    }
-    return str
+function showModal2() {
+    overlay2.classList.remove('hidden')
+    modal2.classList.remove('hidden')
 }
-//console.log(componenteMasVendido())
-
-/* huboVentas(mes, anio): que indica si hubo ventas en un mes determinado. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre) */
-const huboVentas = (mes, anio) =>{
-const {ventas} = local
-let huboVentas = false
-obtenerFecha(mes,anio)
-  if(obtenerFecha.length > 0){
-    huboVentas = true
-  }
-return huboVentas
+    
+function  hiddeModal2() {
+    overlay2.classList.add('hidden')
+    modal2.classList.add('hidden')
 }
 
-//console.log(huboVentas(1,2019))
+//--------------------------------- MODAL PARA ELIMINAR VENTA ----------------------------------
 
-/* Crear la función ventasSucursal(sucursal), que obtiene las ventas totales realizadas por una sucursal sin límite de fecha. */
+let modal3 = document.querySelector(".modal3");
+let overlay3 = document.querySelector(".overlay3");
+let btnCancelar = document.querySelector(".close-modal3");
 
-const ventasSucursal=(sucursalElegida)=>{
-  const {ventas} = local;
-  let contador = 0;
-    for(const {sucursal, componentes} of ventas){
-        if(sucursal === sucursalElegida){
-            contador += precioMaquina(componentes)
-        }
-    }
-    return contador
+function showModal3() {
+    overlay3.classList.remove('hidden')
+    modal3.classList.remove('hidden')
+}
+    
+function hiddeModal3() {
+        overlay3.classList.add('hidden')
+        modal3.classList.add('hidden')
 }
 
-//console.log(ventasSucursal("Centro"))
 
-/* Crear la función sucursalDelMes(mes, anio), que se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la sucursal que más vendió en plata en el mes. No cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre). */
+//FORMATO DE LA FECHA :
+const format = (date, locale ,options) => new Intl.DateTimeFormat(locale, options).format(date);
 
-sucursalDelMes=(mes, anio)=>{
-  obtenerFecha(mes,anio)
-  let contador = 0;
-  let str = ""
-  const {ventas} = local;
-  for(const {componentes, sucursal} of ventas){
-    if(contador < precioMaquina(componentes)){
-      contador += precioMaquina(componentes)
-      str = sucursal
-    }
-  }
-  return str
+crearTablaVentas=()=>{
+  const{ventas} = local;
+  const tablaVentas = document.getElementById('cuadriculaVentas');
+  tablaVentas.innerHTML = "";
+
+  ventas.forEach(ventas=>{
+    const crearFilaVentas = document.createElement('tr');
+
+    let plantillaDeDatos =
+    `<td>${format(ventas.fecha, 'es')}</td>
+    <td>${ventas.nombreVendedora}</td>
+    <td>${ventas.sucursal}</td>
+    <td>${ventas.componentes}</td>
+    <td>${precioMaquina(ventas.componentes)}</td>
+    <td><button class="btnEditar"><i id="btnEditar-${ventas}" class="fas fa-pencil-alt"></i></button></td>
+    <td><button class="btnEliminar"><i id="btnEliminar-${ventas}" class="fas fa-trash-alt"></i></td>
+      `;
+
+  crearFilaVentas.innerHTML = plantillaDeDatos;
+  tablaVentas.appendChild(crearFilaVentas);
+  })
+
+  borrarVenta();
+  //editarVenta()
+}
+//BOTONES BORRADO
+
+
+//CARGA DE DATOS EN REPORTES
+
+const renderizadoDatosReporte=()=>{
+  const productosEstrella = document.querySelector('.productosEstrella')
+  const vendedoraMejor = document.querySelector('.vendedoraMejor')
+  productosEstrella.innerHTML = `<p> Producto estrella: <b>${componenteMasVendido()}</b></p>`
+  vendedoraMejor.innerHTML =`<p>Vendedora que más ingresos generó: <b>${mejorVendedoraDelAño(2019)}</b></p>`
 }
 
-//console.log(sucursalDelMes(1,2019))
 
-/* renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año */
-const renderPorMes=()=>{
-  return `
-          Enero: ${ventasMes(1,2019)}
-          Febrero: ${ventasMes(2,2019)}
-          Marzo: ${ventasMes(3,2019)}
-          Abril: ${ventasMes(4,2019)}
-          Mayo: ${ventasMes(5,2019)}
-          Junio: ${ventasMes(6,2019)}
-          Julio: ${ventasMes(7,2019)}
-          Agosto: ${ventasMes(8,2019)}
-          Septiembre: ${ventasMes(9,2019)}
-          Octubre: ${ventasMes(10,2019)}
-          Noviembre: ${ventasMes(11,2019)}
-          Diciembre: ${ventasMes(12,2019)}
-          `
-}
-//console.log(renderPorMes())
-
-/* renderPorSucursal(): Muestra una lista del importe total vendido por cada sucursal */
-
-const renderPorSucursal=()=>{
-    return `
-            Centro: ${ventasSucursal("Centro")}
-            Caballito: ${ventasSucursal("Caballito")}
-            `
-}
-//console.log(renderPorSucursal())
-
-/* render(): Tiene que mostrar la unión de los dos reportes anteriores, cual fue el producto más vendido y la vendedora que más ingresos generó Reporte Ventas por mes: Total de enero 2019: 1250 Total de febrero 2019: 4210 Ventas por sucursal: Total de Centro: 4195 Total de Caballito: 1265 Producto estrella: Monitor GPRS 3000 Vendedora que más ingresos generó: Grace */
-
-const render =()=>{
-  return `
-          Reporte 
-          Ventas por mes: 
-          Total de enero 2019: ${ventasMes(1,2019)}
-          Total de febrero 2019: ${ventasMes(2,2019)} 
-          Ventas por sucursal: 
-          Total de Centro: ${ventasSucursal("Centro")}
-          Total de Caballito: ${ventasSucursal("Caballito")}
-          Producto estrella: ${componenteMasVendido()}
-          Vendedora que más ingresos generó: ${vendedoraDelMes(1,2019)}
-          `
+//CARGA DE DATOS EN VENTAS POR SUCURSAL
+const renderizadoVentasPorSucursal=()=>{
+    const sucursal = document.querySelector('#datosMasVentas')
+    sucursal.innerHTML="";
+    const totalVentas = document.querySelector('#datosTotalVentas')
+    totalVentas.innerHTML = "";
+    const datosGuardados = renderPorSucursal()
+    
+    datosGuardados.forEach(dato=>{
+      sucursal.innerHTML += `<div> ${dato.sucursal}</div>`
+      totalVentas.innerHTML +=`<div> ${dato.importe}</div>`
+    })
+  
 }
 
-console.log(render())

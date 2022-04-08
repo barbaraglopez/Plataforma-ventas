@@ -1,0 +1,139 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap%27');
+@import url('modales.css');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
+body{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    font-family:'Montserrat', sans-serif;
+    padding: 2%;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+}
+
+.ventas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid black;
+}
+
+.sucursalYtotal{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.sucursalMasVentas,.totalVentas{
+    width: 50%;
+    height: 100%;
+    padding-left: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tituloVentas,.tituloSucursal{
+    padding: 0%;
+}
+
+#tablaReportes{
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    height: 80%;
+    width: 40%;
+}
+
+.productosEstrella,.vendedoraMejor{
+    width: 100%;
+    height: 50%;
+    padding-left: 2%;
+}
+
+.tablaMayor{
+    padding: 1%;
+}
+
+.reportes{
+    /* margin-left: 10px; */
+    padding: 5%;
+    margin-left: 10px;
+}
+
+.sucursal{
+    padding: 5%;
+    margin-right: 10px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+    height: 50%;
+}
+
+.titulo{
+    background-color: #1B4965;
+    color: white;
+    margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tablaMayor{
+    padding: 1%;
+}
+
+.cuadriculaMayor{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.fas{
+    padding: 10%;
+}
+
+.fa-pencil-alt{
+    color: rgb(145, 195, 94);
+}
+
+.fa-pencil-alt:hover{
+    color: green;
+    cursor: pointer;
+}
+
+.fa-trash-alt{
+    color: red;
+}
+
+.fa-trash-alt:hover{
+    color: rgb(180, 84, 84);
+    cursor: pointer;
+}
