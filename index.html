@@ -12,13 +12,14 @@
     </head>
     <body>
     <!---------------------------------------VENTANAS MODALES----------------------------------------->
-    <div class="modal hidden"><!-------- AGREGAR VENTA ----------->
+    <div class="modal hidden">
+        <!-------- AGREGAR VENTA ----------->
         <div class="tituloContainer1">
             <h3 class="titulo1">Agregar venta</h3>
-        </div>    
+        </div>
         <div class="nuevaVenta">
             <form id="miForm">
-                <label> 
+                <label>
                     Vendedora
                 </label>
                 <select id="vendedoras" name="vendedoras">
@@ -28,7 +29,7 @@
                     Componentes
                 </label>
                 <select id="componentes" name="componentes" multiple>
-                        <optgroup id="opcionesComponentes"></optgroup>
+                    <optgroup id="opcionesComponentes"></optgroup>
                 </select>
                 <label>
                     Sucursales
@@ -44,44 +45,46 @@
                 </div>
             </form>
         </div>
-    </div>    
+    </div>
     <div class="overlay hidden"></div>
-<!------------------------------------------------------------------------------------------->
-    <div class="modal2 hidden"><!-------- EDITAR VENTA ----------->
+    <!------------------------------------------------------------------------------------------->
+    <div class="modal2 hidden">
+        <!-------- EDITAR VENTA ----------->
         <div class="tituloContainer2">
             <h3 class="titulo2">Editar Venta</h3>
         </div>
-            <form id="form-editarVenta">
-                <label> 
-                    Vendedora
-                </label>
-                <select id="editarVendedoras" name="editarVendedoras">
-                    <optgroup id="editarOpcionVendedora"></optgroup>
-                </select>
-                <label>
-                    Componentes
-                </label>
-                <select id="editarComponentes" name="editarComponentes" multiple>
-                        <optgroup id="editarOpcionComponentes"></optgroup>
-                </select>
-                <label>
-                    Sucursales
-                </label>
-                <select id="editarSucursales" name="editarSucursales">
-                    <optgroup id="editarOpcionSucursales"></optgroup>
-                </select>
-                <label>Fecha</label>
-                <input type="date" id="fechaEditarVenta">
-                <div class="buttonContainer2">
-                    <button class="close-modal2 cancelar">Cancelar</button>
-                    <button type="submit" id="btnEditarVenta" class="confirmar">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>    
+        <form id="form-editarVenta">
+            <label>
+                Vendedora
+            </label>
+            <select id="editarVendedoras" name="editarVendedoras">
+                <optgroup id="editarOpcionVendedora"></optgroup>
+            </select>
+            <label>
+                Componentes
+            </label>
+            <select id="editarComponentes" name="editarComponentes" multiple>
+                <optgroup id="editarOpcionComponentes"></optgroup>
+            </select>
+            <label>
+                Sucursales
+            </label>
+            <select id="editarSucursales" name="editarSucursales">
+                <optgroup id="editarOpcionSucursales"></optgroup>
+            </select>
+            <label>Fecha</label>
+            <input type="date" id="fechaEditarVenta">
+            <div class="buttonContainer2">
+                <button class="close-modal2 cancelar">Cancelar</button>
+                <button type="submit" id="btnEditarVenta" class="confirmar">Guardar</button>
+            </div>
+        </form>
+    </div>
+    </div>
     <div class="overlay2 hidden"></div>
-<!------------------------------------------------------------------------------------------->
-    <div class="modal3 hidden"><!-------- ELIMINAR VENTA ----------->
+    <!------------------------------------------------------------------------------------------->
+    <div class="modal3 hidden">
+        <!-------- ELIMINAR VENTA ----------->
         <div class="tituloContainer3">
             <h3 class="titulo3">Eliminar ventas</h3>
         </div>
@@ -93,32 +96,32 @@
             <button class="close-modal3 cancelar">Cancelar</button>
             <button class="EliminarVenta confirmar">Eliminar</button>
         </div>
-    </div>    
+    </div>
     <div class="overlay3 hidden"></div>
-<!---------------------------------- TABLAS -------------------------------------------->
+    <!---------------------------------- TABLAS -------------------------------------------->
     <div class="container">
         <div class="ventas" id="tablaVentas">
             <div>
                 <h2 class="titulo sucursal">
                     Ventas por sucursal
                 </h2>
-            </div>  
+            </div>
             <div class="sucursalYtotal">
                 <div class="sucursalMasVentas">
                     <div>
                         <h4>Sucursal: </h4>
                     </div>
                     <div id="datosMasVentas"></div>
-                </div>    
+                </div>
                 <div class="totalVentas">
                     <div>
                         <h4>
                             Total de ventas :
-                        </h4>   
+                        </h4>
                     </div>
                     <div id="datosTotalVentas"></div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="ventas">
             <h2 class="titulo reportes">
@@ -165,7 +168,8 @@
                 </tr>
             </thead>
             <tbody id="cuadriculaVentas"></tbody>
-        </table>    
+        </table>
     </div>
-</body>
-</html>
+    </body>
+    
+    </html>
