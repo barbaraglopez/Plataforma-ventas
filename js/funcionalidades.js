@@ -173,28 +173,41 @@ sucursalDelMes = (mes, anio) => {
   return str;
 };
 
+
 //console.log(sucursalDelMes(1,2019))
 
-/* renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año */
-const renderPorMes = () => {
-  return `
-            Enero: ${ventasMes(1, 2019)}
-            Febrero: ${ventasMes(2, 2019)}
-            Marzo: ${ventasMes(3, 2019)}
-            Abril: ${ventasMes(4, 2019)}
-            Mayo: ${ventasMes(5, 2019)}
-            Junio: ${ventasMes(6, 2019)}
-            Julio: ${ventasMes(7, 2019)}
-            Agosto: ${ventasMes(8, 2019)}
-            Septiembre: ${ventasMes(9, 2019)}
-            Octubre: ${ventasMes(10, 2019)}
-            Noviembre: ${ventasMes(11, 2019)}
-            Diciembre: ${ventasMes(12, 2019)}
-            `;
+/* /* renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año */
+/* const mes = () => {
+  const { ventas } = local;
+  let ventasDelMes = []
+  for (const { fecha } of ventas) {
+  ventasDelMes +=
+    `${format(fecha, "es")}`.slice(2).split("-")
+  }
+  return ventasDelMes;
 };
-//console.log(renderPorMes())
 
-/* renderPorSucursal(): Muestra una lista del importe total vendido por cada sucursal */
+console.log(mes()); */
+
+/* const renderPorMes = () => {
+  const {ventas} = local;
+  for (const { fecha } of ventas) {
+  return `
+            Enero: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Febrero: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Marzo: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Abril: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Mayo: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Junio: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Julio: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Agosto: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Septiembre: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Octubre: ${ventasMes(obtenerFecha(`${fecha}`))}
+            Diciembre: ${ventasMes(obtenerFecha(`${fecha}`))}
+            `;
+}}; */
+
+//console.log(renderPorMes()) //Muestra una lista del importe total vendido por cada sucursal
 
 const renderPorSucursal = () => {
   const { sucursales } = local;
@@ -221,4 +234,18 @@ const render = () => {
             Producto estrella: ${componenteMasVendido()}
             Vendedora que más ingresos generó: ${mejorVendedoraDelAño(1, 2019)}
             `;
+};
+
+const nombreVendedoraEstrella = () => {
+  const { ventas } = local;
+  let monto = 0;
+  let nombre = 0;
+  for (const { nombreVendedora } of ventas) {
+    let montoTotal = ventasVendedora(nombreVendedora);
+    if (monto < montoTotal) {
+      monto = montoTotal;
+      nombre = nombreVendedora;
+    }
+  }
+  return nombre;
 };
