@@ -2,15 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap%27');
 @import url('modales.css');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
+@import url('media_query_600.css');
+
 body{
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
     font-family:'Montserrat', sans-serif;
     padding: 2%;
 }
@@ -62,9 +64,10 @@ body{
     padding-left: 2%;
 }
 
-.tablaMayor{
+/* .tablaMayor{
     padding: 1%;
-}
+    display: flex;
+} */
 
 .reportes{
     /* margin-left: 10px; */
@@ -84,15 +87,20 @@ table {
     height: 100px;
 }
 
-td, th {
+td{
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
+    padding: 5px;
+}
+
+th{
+    text-align: center;
     padding: 5px;
 }
 
 tr:nth-child(even) {
     background-color: #dddddd;
-    height: 50%;
+    height: 100%;
 }
 
 .titulo{
@@ -103,6 +111,7 @@ tr:nth-child(even) {
     justify-content: space-between;
     align-items: center;
 }
+
 
 #tablaMayor{
     padding: 1%;

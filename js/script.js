@@ -1,69 +1,55 @@
-
 //FORMATO DE LA FECHA :const format = (date, locale, options) =>
-
 const format = (date, locale, options) => new Intl.DateTimeFormat(locale, options).format(date);
 
-
-//CAPTURO BOTONES DE MODAL NUEVA VENTA(ELIMINAR / CONFIRMAR)
-const btnConfirmarNuevaVenta = document.querySelector("#btnGuardarVenta");
-const btnCancelarNuevaVenta = document.querySelector("#btnCancelarVenta");
-
-// -------------------------------------------------------------------------------------------//
-//                          PRIMER RENDERIZADO EN PANTALLA
-// -------------------------------------------------------------------------------------------//
+/* -------------------------------------------------------------------------- */
+/*                   Primera carga e invocación de funciones                  */
+/* -------------------------------------------------------------------------- */
 window.addEventListener("load", () => {
+  const btnOpenModal = document.querySelector(".show-modal");
+  const btnCloseModal = document.querySelector(".close-modal");
 
-  renderizadoDatosReporte();
-  renderizadoVentasPorSucursal();
+  //Muestro las ventas ya disponibles en la tabla.
   crearTablaVentas();
+  //Cargo los datos de los reportes.
+  renderizadoDatosReporte();
+  //Cargo los datos de las ventas por sucursal.
+  renderizadoVentasPorSucursal();
+  //Agrego los eventos a los botones eliminar ya renderizados.
   eliminarUnaVenta();
+  //Agrego los eventos a los botones editar ya renderizados.
   editarUnaVenta();
+  //Agrego la funcionalidad para poder guardar ventas nuevas.
+  guardarNuevaVenta();
 
   btnOpenModal.addEventListener("click", () => {
-    showModal();
-    cargarDatos("opcionesComponentes");
-    cargarDatos("opcionesVendedoras");
-    cargarDatos("opcionesSucursales");
+		showModal();
+		cargarDatos("opcionesComponentes");
+		cargarDatos("opcionesVendedoras");
+		cargarDatos("opcionesSucursales");
+  });
+  btnCloseModal.addEventListener("click", hiddeModal);
+
+  document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" || e.key === "scape") {
+			hiddeModal();
+			hiddeModal2();
+			hiddeModal3();
+		}
   });
 
-  btnConfirmarNuevaVenta.addEventListener('click', event =>{
-    event.preventDefault();
-    guardarNuevaVenta();
-    hiddeModal();
-  })
-
-  btnCancelarNuevaVenta.addEventListener('click', event =>{
-    event.preventDefault();
-    hiddeModal();
-  })
-
-  btnCloseModal.addEventListener("click", hiddeModal);
-  overlay.addEventListener("click", hiddeModal);
-  btnCancelarEditarVenta.addEventListener("click", hiddeModal2);
-  overlay2.addEventListener("click", hiddeModal2);
-  btnCancelar.addEventListener("click", hiddeModal3);
-  overlay3.addEventListener("click", hiddeModal3);
-
-  document.addEventListener('keydown', function(e){
-      if(e.key ==="Escape" || e.key === "scape"){
-          hiddeModal()
-          hiddeModal2()
-          hiddeModal3()
-      }
-  })
 });
 
 /* -------------------------------------------------------------------------- */
-/*                     CARGAR DATOS DE VENTAS EN PANTALLA                     */
+/*                      Carga datos de ventas en pantalla                     */
 /* -------------------------------------------------------------------------- */
 const crearTablaVentas = () => {
-  const { ventas } = local;
-  const tablaVentas = document.getElementById("cuadriculaVentas");
-  tablaVentas.innerHTML = "";
+	const { ventas } = local;
+	const tablaVentas = document.getElementById("cuadriculaVentas");
+	tablaVentas.innerHTML = "";
 
-  ventas.forEach((ventas, index) => {
-      const crearFilaVentas = document.createElement("tr");
-      let plantillaDeDatos = `<td>${format(ventas.fecha, "es")}</td>
+	ventas.forEach((ventas, index) => {
+		const crearFilaVentas = document.createElement("tr");
+		let plantillaDeDatos = `<td>${format(ventas.fecha, "es")}</td>
       <td>${ventas.nombreVendedora}</td>
       <td>${ventas.sucursal}</td>
       <td>${ventas.componentes}</td>
@@ -71,197 +57,273 @@ const crearTablaVentas = () => {
       <td><button class="btnEditar" id="btnEditar-${index}"><i class="fas fa-pencil-alt"></i></button></td>
       <td><button class="btnEliminar" id="btnEliminar-${index}"><i class="fas fa-trash-alt"></i></td>
       `;
-      crearFilaVentas.innerHTML = plantillaDeDatos;
-      tablaVentas.appendChild(crearFilaVentas);
-  });
-  modalEnBotonEliminar();
-  modalEnBotonEditar();
+		crearFilaVentas.innerHTML = plantillaDeDatos;
+		tablaVentas.appendChild(crearFilaVentas);
+	});
+	modalEnBotonEliminar();
+	modalEnBotonEditar();
 };
 
-// -------------------------------------------------------------------------------------------//
-//                              IMPRESION DE DATOS EN LAS MODALES
-// -------------------------------------------------------------------------------------------//
+
+/* -------------------------------------------------------------------------- */
+/*                        Impresion de datos en modales                       */
+/* -------------------------------------------------------------------------- */
 const cargarDatos = (id) => {
-  const opciones = document.getElementById(id);
-  const { sucursales, vendedoras, precios } = local;
-  if (opciones.innerHTML === "") {
-    if (id === "opcionesSucursales" || id === "editarOpcionSucursales") {
-      sucursales.forEach(element => {
-        const crearInputs = document.createElement("option");
-        opciones.appendChild(crearInputs);
-        crearInputs.innerHTML = `${element}`;
-    });
-    } else if (id === "opcionesVendedoras" || id === "editarOpcionVendedora") {
-      vendedoras.forEach(element => {
-        const crearInputs = document.createElement("option");
-        opciones.appendChild(crearInputs);
-        crearInputs.innerHTML = `${element}`;
-      });
-    } else {
-      precios.forEach(({componente}) => {
-        const crearInputs = document.createElement("option");
-        opciones.appendChild(crearInputs);
-        crearInputs.innerHTML = `${componente}`;
-      });
-    }
-  }
+	const opciones = document.getElementById(id);
+	const { sucursales, vendedoras, precios } = local;
+
+	if (opciones.innerHTML === "") {
+		if (id === "opcionesSucursales" || id === "editarOpcionSucursales") {
+			sucursales.forEach((element) => {
+				const crearInputs = document.createElement("option");
+				opciones.appendChild(crearInputs);
+				crearInputs.innerHTML = `${element}`;
+			});
+		} else if (id === "opcionesVendedoras" || id === "editarOpcionVendedora") {
+			vendedoras.forEach((element) => {
+				const crearInputs = document.createElement("option");
+				opciones.appendChild(crearInputs);
+				crearInputs.innerHTML = `${element}`;
+			});
+		} else {
+			precios.forEach(({ componente }) => {
+				const crearInputs = document.createElement("option");
+				opciones.appendChild(crearInputs);
+				crearInputs.innerHTML = `${componente}`;
+			});
+		}
+	}
 };
 
-// -------------------------------------------------------------------------------------------//
-//                               VENTANAS MODALES
-// -------------------------------------------------------------------------------------------//
+/* -------------------------------------------------------------------------- */
+/*                              Ventanas Modales                              */
+/* -------------------------------------------------------------------------- */
 
-// ----------------------MODAL PARA NUEVA VENTA---------------------
-
+/* ------------------------- MODAL PARA NUEVA VENTA ------------------------- */
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
-const btnCloseModal = document.querySelector(".close-modal");
-const btnOpenModal = document.querySelector(".show-modal");
 
 const showModal = () => {
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
 };
-
 const hiddeModal = () =>{
   overlay.classList.add("hidden");
   modal.classList.add("hidden");
 }
 
-// ---------------------------------MODAL PARA EDITAR VENTA-----------------------------------
+overlay.addEventListener("click", hiddeModal);
 
+
+/* ------------------------- MODAL PARA EDITAR VENTA ------------------------ */
 const modal2 = document.querySelector(".modal2");
 const overlay2 = document.querySelector(".overlay2");
-const btnCancelarEditarVenta = document.querySelector(".close-modal2");
 
 const showModal2 = () => {
   overlay2.classList.remove("hidden");
   modal2.classList.remove("hidden");
 };
-
 const hiddeModal2 = () =>{
   overlay2.classList.add("hidden");
   modal2.classList.add("hidden");
 }
 
-//--------------------------------- MODAL PARA ELIMINAR VENTA ----------------------------------
+overlay2.addEventListener("click", hiddeModal2);
 
+
+/* ------------------------ MODAL PARA ELIMINAR VENTA ----------------------- */
 const modal3 = document.querySelector(".modal3");
 const overlay3 = document.querySelector(".overlay3");
-const btnCancelar = document.querySelector(".close-modal3");
 
 const showModal3 = () => {
   overlay3.classList.remove("hidden");
   modal3.classList.remove("hidden");
 };
-
 const hiddeModal3 = () => {
   overlay3.classList.add("hidden");
   modal3.classList.add("hidden");
 };
 
+overlay3.addEventListener("click", hiddeModal3);
+
+
+/* -------------------------------------------------------------------------- */
+/*                             Guardar nueva venta                            */
+/* -------------------------------------------------------------------------- */
 const guardarNuevaVenta = () => {
-  const {ventas} = local;
-  const optVendedora = document.querySelector('#vendedoras').options;
-  const optComponente = document.querySelector('#componentes').options;
-  const optSucursal = document.querySelector('#sucursales').options;
+	const btnGuardarVenta = document.querySelector("#btnGuardarVenta");
+	const btnCancelarVenta = document.querySelector("#btnCancelarVenta");
+	const selectVendedoras = document.querySelector("#vendedoras").options;
+	const selectComponentes = document.querySelector("#componentes").options;
+	const selectSucursales = document.querySelector("#sucursales").options;
 
-  //Trabajo las fechas
-  const inputFecha = document.querySelector('#fechaNuevaVenta').value;
-  let arrayFecha = inputFecha.split("-")
-  let arrayFiltrado = []
-  arrayFecha.map(elemento =>{
-    arrayFiltrado.push(parseInt(elemento))
-  })
+	const { ventas } = local;
 
-  const datosNormalizados = { 
-    fecha: undefined, 
-    nombreVendedora: undefined, 
-    componentes: [], 
-    sucursal: undefined
-  }
-  
-  for(const opcion of optVendedora){
-    if(opcion.selected === true){
-      datosNormalizados.nombreVendedora = opcion.value;
-    }
-  }
-  for(const opcion of optComponente){
-    if(opcion.selected === true){
-      datosNormalizados.componentes.push(opcion.value);
-    }
-  }
-  for(const opcion of optSucursal){
-    if(opcion.selected === true){
-      datosNormalizados.sucursal = opcion.value;
-    }
-  }
+	btnGuardarVenta.addEventListener("click", (event) => {
+		event.preventDefault();
 
-  datosNormalizados.fecha = new Date (arrayFiltrado[0], arrayFiltrado[1], arrayFiltrado[2])
-  
-  ventas.push(datosNormalizados);
-  crearTablaVentas();
-  renderizadoDatosReporte();
-  renderizadoVentasPorSucursal();
-}
+		const inputFecha = document.querySelector("#fechaNuevaVenta").value;
+		const arrayFecha = inputFecha.split("-");
+		const arrayFiltrado = [];
+		arrayFecha.map((elemento) => arrayFiltrado.push(parseInt(elemento)));
 
+		const datosNormalizados = {
+			fecha: undefined,
+			nombreVendedora: undefined,
+			componentes: [],
+			sucursal: undefined,
+		};
+
+		for (const opcion of selectVendedoras) {
+			if (opcion.selected === true) {
+				datosNormalizados.nombreVendedora = opcion.value;
+			}
+		}
+		for (const opcion of selectComponentes) {
+			if (opcion.selected === true) {
+				datosNormalizados.componentes.push(opcion.value);
+			}
+		}
+		for (const opcion of selectSucursales) {
+			if (opcion.selected === true) {
+				datosNormalizados.sucursal = opcion.value;
+			}
+		}
+		datosNormalizados.fecha = new Date(
+			arrayFiltrado[0],
+			arrayFiltrado[1],
+			arrayFiltrado[2]
+		);
+		ventas.push(datosNormalizados);
+		crearTablaVentas();
+		renderizadoDatosReporte();
+		renderizadoVentasPorSucursal();
+		hiddeModal();
+	});
+
+	btnCancelarVenta.addEventListener(
+		"click",
+		(event) => event.preventDefault(),
+		hiddeModal()
+	);
+};
 
 //FUNCIONALIDAD ELIMINAR VENTA
 const eliminarUnaVenta = () => {
-    const { ventas } = local;
-    const botones = document.querySelectorAll('.btnEliminar');
-    let fragmentoID;
-    botones.forEach(btn =>{
-        btn.addEventListener('click', event =>{
-            let id = event.target.id;
-            fragmentoID = parseInt(id.slice(12));
-            const botonAceptar = document.querySelector('.buttonContainer3 .confirmar');
-            const botonCancelar = document.querySelector('.buttonContainer3 .cancelar')
+	const btnEliminar = document.querySelectorAll(".btnEliminar");
+	const btnAceptar = document.querySelector(".buttonContainer3 .confirmar");
+	const btnCancelar = document.querySelector(".buttonContainer3 .cancelar");
 
-            botonAceptar.addEventListener('click', ()=>{
-              ventas.forEach((_, i) => {
-                if(i === fragmentoID){
-                  ventas.splice(i, 1);
-                }
-              })
-              hiddeModal3();
-              crearTablaVentas();
-            })
+	const { ventas } = local;
+	let fragmentoID;
 
-            botonCancelar.addEventListener('click', ()=>{
-              fragmentoID = "";
-              hiddeModal3();
-            })
-        })
-    })
-}
+	btnEliminar.forEach((btn) => {
+		btn.addEventListener("click", (event) => {
+			let id = event.target.id;
+			fragmentoID = parseInt(id.slice(12));
+
+			btnAceptar.addEventListener("click", (event) => {
+				event.preventDefault();
+				ventas.forEach((_, i) => {
+					if (i === fragmentoID) {
+						ventas.splice(i, 1);
+					}
+				});
+				crearTablaVentas();
+				hiddeModal3();
+			});
+
+			btnCancelar.addEventListener("click", (event) => {
+				event.preventDefault();
+				fragmentoID = "";
+				hiddeModal3();
+			});
+		});
+	});
+};
 
 //FUNCIONALIDAD EDITAR VENTA
 const editarUnaVenta = () => {
-  const {ventas} = local;
-  const btnEditar = document.querySelectorAll('.btnEditar');
-  let fragmentoID
-  btnEditar.forEach(btn=>{
-    btn.addEventListener('click', event =>{
-      const botonAceptar = document.querySelector('.buttonContainer2 .confirmar');
+	const btnEditar = document.querySelectorAll(".btnEditar");
+	const btnAceptar = document.querySelector(".buttonContainer2 .confirmar");
+	const btnCancelar = document.querySelector(".buttonContainer2 .cancelar");
+	const selectVendedoras = document.querySelector("#editarVendedoras").options;
+	const selectComponentes = document.querySelector("#editarComponentes").options;
+	const selectSucursales = document.querySelector("#editarSucursales").options;
 
-      cargarDatos("editarOpcionComponentes");
-      cargarDatos("editarOpcionVendedora");
-      cargarDatos("editarOpcionSucursales");
+	const { ventas } = local;
+	let fragmentoID;
 
-      let id = event.target.id;
-      fragmentoID = parseInt(id.slice(10));
-      botonAceptar.addEventListener('click', ()=>{
-        ventas.forEach((_,i) => {
-          if(i === fragmentoID){
-          }
-        })
-      })
-    })
-  })
-}
+	btnEditar.forEach((btn) => {
+		btn.addEventListener("click", (event) => {
+			let id = event.target.id;
+			fragmentoID = parseInt(id.slice(10));
 
-//EVENTOS EN EL B0TON ELIMINAR VENTA
+			cargarDatos("editarOpcionComponentes");
+			cargarDatos("editarOpcionVendedora");
+			cargarDatos("editarOpcionSucursales");
+
+      /* ------------------------------------ x ----------------------------------- */
+      //ToDo: agregar funcionalidad para que al renderizar me muestre ya las opciones seleccioandas de la venta 
+      /* ------------------------------------ x ----------------------------------- */
+
+			btnAceptar.addEventListener("click", (event) => {
+				event.preventDefault();
+
+				const inputFecha = document.querySelector("#fechaEditarVenta").value;
+				const arrayFecha = inputFecha.split("-");
+				const arrayFiltrado = [];
+				arrayFecha.map((elemento) => arrayFiltrado.push(parseInt(elemento)));
+
+				const datosARemplazar = {
+					fecha: undefined,
+					nombreVendedora: undefined,
+					componentes: [],
+					sucursal: undefined,
+				};
+
+				for (const opcion of selectVendedoras) {
+					if (opcion.selected === true) {
+						datosARemplazar.nombreVendedora = opcion.value;
+					}
+				}
+				for (const opcion of selectComponentes) {
+					if (opcion.selected === true) {
+						datosARemplazar.componentes.push(opcion.value);
+					}
+				}
+				for (const opcion of selectSucursales) {
+					if (opcion.selected === true) {
+						datosARemplazar.sucursal = opcion.value;
+					}
+				}
+
+				datosARemplazar.fecha = new Date(
+					arrayFiltrado[0],
+					arrayFiltrado[1],
+					arrayFiltrado[2]
+				);
+
+				ventas.forEach((_, i) => {
+					if (i === fragmentoID) {
+						ventas.splice(i, 1, datosARemplazar);
+					}
+				});
+        crearTablaVentas();
+        renderizadoDatosReporte();
+        renderizadoVentasPorSucursal();
+        hiddeModal2();
+			});
+
+			btnCancelar.addEventListener("click", (event) => {
+				event.preventDefault();
+				hiddeModal2();
+			});
+		});
+	});
+};
+
+/* ------------------- Eventos en el boton eliminar venta ------------------- */
 const modalEnBotonEliminar = () => {
     const btnOpenModalEliminar = document.querySelectorAll(".btnEliminar");
     btnOpenModalEliminar.forEach((btn) => {
