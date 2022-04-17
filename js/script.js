@@ -261,7 +261,18 @@ const editarUnaVenta = () => {
 
 			cargarDatos("editarOpcionComponentes");
 			cargarDatos("editarOpcionVendedora");
-			cargarDatos("editarOpcionSucursales");
+			cargarDatos("editarOpcionSucursales"); 
+
+	
+			/* let arrayVacio = [];
+			const listaComponentes = document.querySelector("editarOpcionComponentes")
+			listaComponentes.forEach(componente => componente.selected && arrayVacio.push(componente.value))
+				
+			ventas.forEach((venta,indexVenta) => {	
+				if(indexVenta === fragmentoID){
+					console.log(fragmentoID)
+				}
+			}) */
 
       /* ------------------------------------ x ----------------------------------- */
       //ToDo: agregar funcionalidad para que al renderizar me muestre ya las opciones seleccioandas de la venta 
@@ -280,7 +291,7 @@ const editarUnaVenta = () => {
 					nombreVendedora: undefined,
 					componentes: [],
 					sucursal: undefined,
-				};
+				}; 
 
 				for (const opcion of selectVendedoras) {
 					if (opcion.selected === true) {
@@ -303,17 +314,25 @@ const editarUnaVenta = () => {
 					arrayFiltrado[1],
 					arrayFiltrado[2]
 				);
-
+				
+				/* if(datosARemplazar.fecha === undefined && datosARemplazar.nombreVendedora === undefined && datosARemplazar.sucursal === undefined && datosARemplazar.fecha === undefined){
+					alert:"rellene el campo vacio"
+				}else{ */
 				ventas.forEach((_, i) => {
 					if (i === fragmentoID) {
 						ventas.splice(i, 1, datosARemplazar);
 					}
 				});
+			//}		
+
+
         crearTablaVentas();
         renderizadoDatosReporte();
         renderizadoVentasPorSucursal();
         hiddeModal2();
+        eliminarUnaVenta();
 			});
+
 
 			btnCancelar.addEventListener("click", (event) => {
 				event.preventDefault();
@@ -369,3 +388,7 @@ const renderizadoVentasPorSucursal = () => {
         totalVentas.innerHTML += `<div> ${dato.importe}</div>`;
     });
 };
+
+
+
+

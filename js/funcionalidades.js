@@ -131,7 +131,6 @@ const componenteMasVendido = () => {
 
 /* huboVentas(mes, anio): que indica si hubo ventas en un mes determinado. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre) */
 const huboVentas = (mes, anio) => {
-  const { ventas } = local;
   let huboVentas = false;
   obtenerFecha(mes, anio);
   if (obtenerFecha.length > 0) {
