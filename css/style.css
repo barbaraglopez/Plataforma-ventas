@@ -11,7 +11,6 @@ body{
     margin: 0 auto;
     justify-content: center;
     align-items: center; 
-    width: 100vw;
     /* height: 100vh; */
     font-family:'Montserrat', sans-serif;
     padding: 2%;
@@ -30,6 +29,9 @@ body{
     border: 1px solid black;
 }
 
+.ventasTitulo{
+    margin-left: 2rem;
+}
 .sucursalYtotal{
     display: flex;
     width: 100%;
@@ -64,10 +66,6 @@ body{
     padding-left: 2%;
 }
 
-/* .tablaMayor{
-    padding: 1%;
-    display: flex;
-} */
 
 .reportes{
     /* margin-left: 10px; */
@@ -95,7 +93,7 @@ td{
 
 th{
     text-align: center;
-    padding: 5px;
+    padding: 0,9%;
 }
 
 tr:nth-child(even) {

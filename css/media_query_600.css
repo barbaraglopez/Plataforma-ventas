@@ -1,3 +1,70 @@
 @media(max-width:600px){
+.container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.ventas .sucursal{
+    text-align: center;
+    padding:5% 27%;
+}
+
+.ventas .reportes{
+    text-align: center;
+    padding:5% 40%; 
+}
+
+.cuadriculaMayor .tablaMayor{
+justify-content: space-around;
+}
+
+.tablaConVentas .theadTablaVentas .contenedorDeTheads .thead{
+    height:2rem;
+    width: 50%;
+}
+
+#cuadriculaVentas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* #cuadriculasVentas tr{
+    display: flex;
+} */
+
+.reportes{
+    padding: auto;
+}
+
+.sucursalMasVentas, totalVentas{
+text-align: center;
+}
+
+.container #tablaReportes .vendedoraMejor{
+    padding: 2% 65%;
+    text-align: center;
+}
+
+.container #tablaReportes .productosEstrella{
+    padding: 2% 65%;
+    text-align: center;
+}
+
+.cuadriculaMayor{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.tablaConVentas{
+    display: flex;
+    flex-direction: column;
+}
+
+.theadTablaVentas{
+    width: fit-content;
+    
+}
 }
