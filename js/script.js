@@ -120,7 +120,6 @@ const crearTablaVentas = () => {
     btn.addEventListener('click', event =>{
       showModal3();
       fragmentoIDEliminar = parseInt(event.target.id.slice(12));
-      console.log(fragmentoIDEliminar);
     })
   })
 
@@ -313,22 +312,22 @@ const editarUnaVenta = (id) => {
   );
 
   let fechaHoy = new Date();
+  
   if(datosARemplazar.fecha !== undefined && 
-    datosARemplazar <= fechaHoy &&
-    datosARemplazar.nombreVendedora !==undefined && 
+    datosARemplazar.fecha <= fechaHoy &&
+    datosARemplazar.nombreVendedora !== undefined &&
     datosARemplazar.componentes.length > 0){
     ventas.forEach((_, i) => {
       if (i === id) {
         ventas.splice(i, 1, datosARemplazar);
       }
     });
-    
     crearTablaVentas();
     renderizadoDatosReporte();
     renderizadoVentasPorSucursal();
     hiddeModal2();
   }else{
-    alert("datos no validos")
+    alert("Datos no validos")
   }
 };
 
