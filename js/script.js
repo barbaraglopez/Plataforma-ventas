@@ -251,13 +251,13 @@ const guardarNuevaVenta = () => {
     datosNormalizados.componentes.length > 0){
     
     ventas.push(datosNormalizados);
-    
+    swal("Bien!","Venta cargada con exito","success")
     crearTablaVentas();
 		renderizadoDatosReporte();
 		renderizadoVentasPorSucursal();
 		hiddeModal();
   }else{
-    alert("rellene todos los campos")
+    swal("Error al cargar la venta", "Verifique que todos los campos esten seleccionados corractamente y que la fecha sea valida.","error")
   }
 };
 
@@ -322,12 +322,13 @@ const editarUnaVenta = (id) => {
         ventas.splice(i, 1, datosARemplazar);
       }
     });
+    swal("Bien!","Venta modificada con exito","success")
     crearTablaVentas();
     renderizadoDatosReporte();
     renderizadoVentasPorSucursal();
     hiddeModal2();
   }else{
-    alert("Datos no validos")
+    swal("Error al cargar la venta", "Verifique que todos los campos esten completos y que la fecha sea valida","error")
   }
 };
 
@@ -357,3 +358,6 @@ const renderizadoVentasPorSucursal = () => {
         totalVentas.innerHTML += `<div> ${dato.importe}</div>`;
     });
 };
+
+
+

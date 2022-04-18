@@ -19,21 +19,6 @@
 justify-content: space-around;
 }
 
-.tablaConVentas .theadTablaVentas .contenedorDeTheads .thead{
-    height:2rem;
-    width: 50%;
-}
-
-#cuadriculaVentas{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-/* #cuadriculasVentas tr{
-    display: flex;
-} */
-
 .reportes{
     padding: auto;
 }
@@ -61,10 +46,5 @@ text-align: center;
 .tablaConVentas{
     display: flex;
     flex-direction: column;
-}
-
-.theadTablaVentas{
-    width: fit-content;
-    
 }
 }
