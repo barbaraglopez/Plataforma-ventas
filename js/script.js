@@ -271,7 +271,9 @@ const eliminarUnaVenta = (id) => {
   });
 };
 
-//FUNCIONALIDAD EDITAR VENTA
+/* -------------------------------------------------------------------------- */
+/*                             Editar una venta                               */
+/* -------------------------------------------------------------------------- */
 const editarUnaVenta = (id) => {
 	const selectVendedoras = document.querySelector("#editarVendedoras").options;
 	const selectComponentes = document.querySelector("#editarComponentes").options;
