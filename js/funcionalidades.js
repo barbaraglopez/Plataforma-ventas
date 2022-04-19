@@ -139,7 +139,7 @@ const huboVentas = (mes, anio) => {
 //Crear la función sucursalDelMes(mes, anio), que se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la sucursal que más vendió en plata en el mes. No cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre). */
 sucursalDelMes = (mes, anio) => {
   obtenerFecha(mes, anio);
-  let contador = 0;
+  const contador = 0;
   let str = "";
   const { ventas } = local;
   for (const { componentes, sucursal } of ventas) {
