@@ -1,6 +1,6 @@
 # Plataforma ventas
 ***
-Les presento mi segundo proyecto realizado para Ada. El mismo consiste en una plataforma de ventas que se encarga de almacenar información que consiste en vendedoras, productos vendidos, importe total de ventas, información de cada sucursal, total de ventas por vendedoras, etc.[Podés verlo accediendo a este link!](https://barbaraglopez.github.io/SegundoProyectoAda/)
+Les presento mi segundo proyecto realizado para Ada. El mismo consiste en una plataforma de ventas que se encarga de almacenar información que consiste en vendedoras, productos vendidos, importe total de ventas, información de cada sucursal, total de ventas por vendedoras, etc.[Podés verlo accediendo a este link!](https://barbaraglopez.github.io/Plataforma-ventas/)
 ***
 Está diseñado en HTML, CSS, Javascript y una libreria para los estilos de los alerts.
 ***
